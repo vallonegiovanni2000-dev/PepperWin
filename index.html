@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PepperWin</title>
+<style>
+:root{--bg:#6b6f73;--card:#7a7e82;--card2:#5a5e62;--tx:#f4f4f2;--mut:#cfd1d2;--red:#e23b2e;--grn:#4caf50}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#app{max-width:430px;margin:0 auto;min-height:100vh;padding-bottom:140px}
+button{font:inherit;color:inherit;cursor:pointer;border:0}input{font:inherit}
+header{position:sticky;top:0;z-index:5;background:var(--card2);padding:10px 14px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:900;font-size:22px;display:flex;align-items:center;gap:6px}.logo b{color:var(--red)}
+svg.p{width:18px;height:18px;flex:none}.bal{background:var(--bg);border-radius:20px;padding:5px 12px;font-weight:800;display:flex;gap:5px;align-items:center}
+.btn{background:var(--red);color:#fff;font-weight:800;border-radius:10px;padding:10px 14px}.btn:disabled{background:#585b5e;color:var(--mut);cursor:default}
+.btn.alt{background:var(--card2)}.full{width:100%}
+.card{margin:10px 14px;background:var(--card);border-radius:14px;padding:12px}.lg{font-size:12px;color:var(--mut)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.lh{display:flex;justify-content:space-between;width:calc(100% - 28px);margin:12px 14px 0;background:var(--card2);padding:8px 12px;border-radius:10px;font-weight:800}
+.os{display:grid;gap:6px;grid-template-columns:repeat(3,1fr)}.wrap{display:flex;flex-wrap:wrap;gap:6px}
+.o{background:var(--card2);border-radius:8px;padding:6px 8px;display:flex;justify-content:space-between;gap:6px;border:2px solid transparent;min-width:92px}
+.os .o{min-width:0}.o small{color:var(--mut);font-size:11px}.o b{font-size:13px}.o.on{border-color:var(--grn);background:#2f5a31}.o:disabled{opacity:.45;cursor:default}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:6px 0}.tab{background:var(--bg);border-radius:16px;padding:5px 11px;white-space:nowrap;font-size:13px}.tab.on{background:var(--tx);color:#333;font-weight:800}
+.pn{background:var(--card2);border-radius:10px;padding:8px;margin-top:8px}.more{background:none;color:var(--mut);width:100%;padding:6px;font-size:13px}
+input.in{width:100%;background:var(--card);color:var(--tx);border:1px solid #8b8f93;border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--card2);border-top:1px solid #8b8f93}.bar>div{max-width:430px;margin:0 auto}
+.slip{padding:10px 14px;max-height:55vh;overflow:auto}.sel{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #8b8f93;font-size:13px}
+.x{background:none;font-size:18px;color:var(--mut)}.st{display:flex;align-items:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.rd{width:36px;height:36px;border-radius:50%;background:var(--bg);font-size:20px}.ch{background:var(--bg);border-radius:14px;padding:4px 9px;font-size:13px}
+.nav{display:flex}.nav button{flex:1;padding:12px 0;background:none;color:var(--mut)}.nav .on{color:var(--tx);font-weight:800;box-shadow:inset 0 3px 0 var(--red)}
+.msg{color:#ffd27a;font-size:13px;min-height:18px}.ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:14px}.ok{background:#2e9e43}.ko{background:#d9291c}
+.badge{font-size:12px;font-weight:800;padding:3px 10px;border-radius:12px;background:var(--bg)}.won{background:#2e9e43}.lost{background:#d9291c}
+.toast{position:fixed;top:60px;left:12px;right:12px;max-width:406px;margin:0 auto;background:var(--tx);color:#333;font-weight:700;border-radius:10px;padding:10px 12px;z-index:9}
+.lgn{padding:40px 22px;display:flex;flex-direction:column;gap:10px}.lgn p{text-align:center;color:var(--mut)}.ck{display:flex;gap:10px;align-items:center;background:var(--card);border-radius:10px;padding:10px 12px}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><symbol id="pp" viewBox="0 0 24 24"><path d="M7 8.2C4 9.2 3.4 14 5 17.6c1 2.4 3.5 3.9 5 2.9 1 1 3 1 4 0 1.5 1 4-.5 5-2.9C20.6 14 20 9.2 17 8.2c-2-.9-3.5.1-5 .6-1.5-.5-3-1.5-5-.6z" fill="#d9291c"/><path d="M9.6 10.2c-1 3-.6 6.6.9 9.2M14.4 10.2c1 3 .6 6.6-.9 9.2" stroke="#a81c12" stroke-width="1" fill="none" stroke-linecap="round"/><path d="M6.8 10.5c-.9 2-.7 4 0 5.5" stroke="#ff8f84" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M9 7.8c1.2-1.3 4.8-1.3 6 0" stroke="#3f9a43" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M12 7.5c0-2.2.8-3.7 3-4.5" stroke="#4caf50" stroke-width="2.2" fill="none" stroke-linecap="round"/></symbol></svg>
+<div id="app"></div><div id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+// ===== Collegamento a Supabase (valori pubblici, fatti per stare nel sito) =====
+const SUPABASE_URL = "https://uhrjchfijbqxgjrhoill.supabase.co";
+const SUPABASE_KEY = "sb_publishable_rfdb8NGWtUYfyB7phlyarQ_1bNngWrY";
+// =====================================================================================
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const PP = '<svg class="p"><use href="#pp"/></svg>';
+const $ = id => document.getElementById(id);
+const fmt = u => (u / 20).toFixed(2).replace(".", ","), q2 = q => Number(q).toFixed(2).replace(".", ",");
+const O1 = ["1","X","2"], DC = ["1X","X2","12"], UO = ["Under 1,5","Over 1,5","Under 2,5","Over 2,5"];
+const MK = {"Doppia chance": DC,
+ "Under/Over": ["0,5","1,5","2,5","3,5","4,5"].flatMap(l => ["Under "+l, "Over "+l]),
+ "Goal": ["Goal","NoGoal"], "Multigoal": [], "Handicap": ["-1","+1"].flatMap(t => O1.map(o => o+" ("+t+")")),
+ "1X2 + Goal/NoGoal": ["Goal","NoGoal"].flatMap(e => O1.map(o => o+"+"+e)), "DC + Goal/NoGoal": ["Goal","NoGoal"].flatMap(e => DC.map(o => o+"+"+e)),
+ "1X2 + Under/Over": UO.flatMap(e => O1.map(o => o+"+"+e)), "DC + Under/Over": UO.flatMap(e => DC.map(o => o+"+"+e))};
+for (let x = 1; x <= 5; x++) for (let y = x+1; y <= 6; y++) MK["Multigoal"].push("MG "+x+"-"+y);
+const TOP = ["Doppia chance","Under/Over","Goal","Multigoal","Handicap","Combo"], CS = ["1X2 + Goal/NoGoal","DC + Goal/NoGoal","1X2 + Under/Over","DC + Under/Over"];
+const S = {user:null, profile:null, M:[], tix:[], tab:"palinsesto", picks:{}, stake:20, msg:"", open:false, q:"", closed:{}, exp:null, grp:"Doppia chance", busy:false, err:"", info:""};
+
+function toast(t){ $("toast").innerHTML = '<div class="toast">'+t+'</div>'; setTimeout(() => $("toast").innerHTML = "", 4000); }
+const picks = () => Object.values(S.picks);
+const total = () => picks().reduce((a,p) => a*p.odd, 1);
+const win = () => Math.min(Math.floor(S.stake*total()+1e-9), 200000);
+
+// ---------- dati ----------
+async function loadProfile(){ const {data} = await sb.from("profiles").select("*").eq("id", S.user.id).maybeSingle(); S.profile = data; }
+async function loadMatches(){
+  const {data, error} = await sb.from("matches").select("*, odds(markets)").eq("status","scheduled").gt("start_time", new Date().toISOString()).order("start_time");
+  if (error) { S.msg = error.message; return; }
+  S.M = (data||[]).map(m => ({...m, odds: Array.isArray(m.odds) ? m.odds[0] : m.odds})).filter(m => m.odds);
+}
+async function loadTix(){ const {data} = await sb.from("tickets").select("*").order("created_at",{ascending:false}).limit(50); S.tix = data||[]; }
+async function refresh(){ if (!S.user) { draw(); return; } await loadProfile(); if (S.profile) { await Promise.all([loadMatches(), loadTix()]); } draw(); }
+
+// ---------- accesso ----------
+async function doLogin(){ S.err = ""; const {error} = await sb.auth.signInWithPassword({email:$("em").value.trim(), password:$("pw").value}); if (error) { S.err = error.message; draw(); } }
+async function doSignup(){ S.err = ""; S.info = "";
+  const {error} = await sb.auth.signUp({email:$("em").value.trim(), password:$("pw").value, options:{emailRedirectTo: location.origin+location.pathname}});
+  if (error) S.err = error.message; else S.info = "Ti abbiamo mandato un’email di verifica. Aprila, poi torna qui e accedi.";
+  draw(); }
+async function doProfile(){ const {error} = await sb.rpc("create_profile", {p_age18:$("a18").checked, p_terms:$("trm").checked}); if (error) { S.err = error.message; draw(); } else { S.err = ""; refresh(); } }
+async function logout(){ await sb.auth.signOut(); }
+
+// ---------- schedina ----------
+function pk(id, g, l){
+  const m = S.M.find(x => x.id === id), q = m && m.odds.markets[g] && m.odds.markets[g][l]; if (!q || q < 1.10) return;
+  const c = S.picks[id]; S.msg = "";
+  if (c && c.g === g && c.l === l) delete S.picks[id];
+  else if (!c && picks().length >= 10) S.msg = "Massimo 10 eventi per schedina.";
+  else S.picks[id] = {id, home:m.home, away:m.away, g, l, odd:q};
+  draw();
+}
+function setStake(v){ S.stake = Math.max(20, Math.min(2000, Math.round(v))); draw(); }
+async function place(){
+  const sel = picks().map(p => ({matchId:p.id, group:p.g, label:p.l, odd:p.odd}));
+  S.busy = true; S.msg = ""; draw();
+  const {error} = await sb.rpc("place_bet", {p_selections:sel, p_stake:S.stake, p_accept:false});
+  S.busy = false;
+  if (error) {
+    const t = error.message || "Errore, riprova.";
+    if (t.startsWith("QUOTE_CAMBIATE:")) { try { JSON.parse(t.slice(15)).forEach(c => { if (S.picks[c.matchId]) S.picks[c.matchId].odd = c.to; }); } catch(e) {} S.msg = "Le quote sono cambiate: controlla e gioca di nuovo."; }
+    else S.msg = t;
+    draw(); return;
+  }
+  S.picks = {}; S.open = false; S.tab = "giocate"; toast("Schedina giocata!"); refresh();
+}
+async function bonus(){
+  const {data, error} = await sb.rpc("claim_bonus");
+  if (error) return toast(error.message);
+  toast(data.claimed ? "+10 peperoni! Ci vediamo domani." : "Hai già riscosso il bonus di oggi."); refresh();
+}
+
+// ---------- disegno ----------
+function btn(m, g, l, short){
+  const q = m.odds.markets[g] && m.odds.markets[g][l]; if (q == null) return "";
+  const c = S.picks[m.id], on = c && c.g === g && c.l === l;
+  return '<button class="o '+(on?"on":"")+'" '+(q<1.10?"disabled":"")+' onclick="pk(\''+m.id+'\',\''+g+'\',\''+l+'\')"><small>'+l+'</small><b>'+q2(q)+'</b></button>';
+}
+function panel(m){
+  const isC = CS.includes(S.grp);
+  let h = '<div class="pn"><div class="tabs">'+TOP.map(t => '<button class="tab '+((t==="Combo"?isC:t===S.grp)?"on":"")+'" onclick="S.grp=\''+(t==="Combo"?(isC?S.grp:CS[0]):t)+'\';draw()">'+t+'</button>').join("")+'</div>';
+  if (isC) h += '<div class="tabs">'+CS.map(c => '<button class="tab '+(c===S.grp?"on":"")+'" onclick="S.grp=\''+c+'\';draw()">'+c+'</button>').join("")+'</div>';
+  return h + '<div class="wrap">'+MK[S.grp].map(l => btn(m, S.grp, l)).join("")+'</div></div>';
+}
+function palinsesto(){
+  let h = '<div class="card row"><div><b>Bonus giornaliero</b><div class="lg">10 peperoni al giorno, solo se accedi</div></div><button class="btn" onclick="bonus()">Riscuoti</button></div>';
+  h += '<div style="margin:0 14px"><input class="in" id="qs" placeholder="Cerca squadra…" value="'+S.q.replace(/"/g,"")+'" oninput="S.q=this.value;draw();const e=$(\'qs\');e.focus();e.setSelectionRange(e.value.length,e.value.length)"></div>';
+  const list = S.M.filter(m => !S.q || (m.home+" "+m.away).toLowerCase().includes(S.q.toLowerCase()));
+  if (!list.length) h += '<div class="card lg">Nessuna partita disponibile al momento.</div>';
+  [...new Set(list.map(m => m.league_name))].forEach(lg => {
+    h += '<button class="lh" onclick="S.closed[\''+lg+'\']=!S.closed[\''+lg+'\'];draw()"><span>'+lg+'</span><span>'+(S.closed[lg]?"▸":"▾")+'</span></button>';
+    if (S.closed[lg]) return;
+    list.filter(m => m.league_name === lg).forEach(m => {
+      const when = new Date(m.start_time).toLocaleString("it-IT",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+      h += '<div class="card" style="margin-top:6px"><div class="lg">'+when+'</div><div style="font-weight:800;margin:2px 0 8px">'+m.home+' – '+m.away+'</div><div class="os">'+O1.map(l => btn(m,"Principali",l)).join("")+'</div>'
+        + '<button class="more" onclick="S.exp=S.exp===\''+m.id+'\'?null:\''+m.id+'\';draw()">'+(S.exp===m.id?"Chiudi mercati ▴":"Altri mercati ▾")+'</button>'+(S.exp===m.id?panel(m):"")+'</div>';
+    });
+  });
+  return h;
+}
+function giocate(){
+  if (!S.tix.length) return '<div class="card lg">Non hai ancora giocato nessuna schedina.</div>';
+  return S.tix.map(t => {
+    const o = t.outcomes || [], txt = {won:"✓ Vinta", lost:"✕ Persa", void:"Annullata", pending:"In attesa"}[t.status];
+    return '<div class="card"><div class="row"><b>'+(t.selections.length>1?"Multipla ("+t.selections.length+")":"Singola")+' · quota '+q2(t.total_odd)+'</b><span class="badge '+t.status+'">'+txt+'</span></div>'
+      + t.selections.map((s,i) => '<div class="row" style="padding:4px 0;border-bottom:1px solid #8b8f93"><span class="lg">'+s.label+' · '+s.group+'</span>'+(o[i]==="won"?'<span class="ic ok">✓</span>':o[i]==="lost"?'<span class="ic ko">✕</span>':"")+'</div>').join("")
+      + '<div class="row" style="margin-top:8px"><span>Puntata '+PP+fmt(t.stake)+'</span><span>'+(t.status==="won"?"Vincita ":"Vincita pot. ")+PP+fmt(t.status==="won"?t.payout:t.potential_win)+'</span></div></div>';
+  }).join("");
+}
+function loginView(){
+  return '<div class="lgn"><div class="logo" style="justify-content:center;font-size:34px">'+PP.replace("p\"","p\" style=\"width:38px;height:38px\"")+'Pepper<b>Win</b></div><p>Schedine simulate con peperoni virtuali. Nessun denaro in palio.</p>'
+    + '<input class="in" id="em" type="email" placeholder="Email"><input class="in" id="pw" type="password" placeholder="Password (almeno 6 caratteri)">'
+    + '<button class="btn" onclick="doLogin()">Accedi</button><button class="btn alt" onclick="doSignup()">Crea account</button><div class="msg">'+S.err+'</div><p>'+S.info+'</p></div>';
+}
+function ageView(){
+  return '<div class="lgn"><div class="logo" style="justify-content:center">'+PP+'Ultimo passo</div><label class="ck"><input id="a18" type="checkbox"> Confermo di avere almeno 18 anni</label>'
+    + '<label class="ck"><input id="trm" type="checkbox"> Accetto termini d’uso e informativa privacy</label><button class="btn" onclick="doProfile()">Inizia con 100 peperoni</button><div class="msg">'+S.err+'</div><button class="btn alt" onclick="logout()">Esci</button></div>';
+}
+function draw(){
+  const a = $("app");
+  if (!S.user) { a.innerHTML = loginView(); return; }
+  if (!S.profile) { a.innerHTML = ageView(); return; }
+  let h = '<header><div class="logo">'+PP+'Pepper<b>Win</b></div><div class="row"><div class="bal">'+PP+fmt(S.profile.balance)+'</div><button class="btn alt" onclick="logout()" style="padding:6px 10px">Esci</button></div></header>';
+  h += S.tab === "palinsesto" ? palinsesto() : giocate();
+  const n = picks().length;
+  h += '<div class="bar"><div>';
+  if (n) {
+    h += '<div class="slip" style="'+(S.open?"":"display:none")+'"><b>'+(n>1?"Multipla · "+n+" eventi":"Singola")+'</b>'
+      + picks().map(p => '<div class="sel"><span>'+p.home+' – '+p.away+'<br><span class="lg">'+p.g+': '+p.l+'</span></span><span><b>'+q2(p.odd)+'</b> <button class="x" onclick="delete S.picks[\''+p.id+'\'];draw()">✕</button></span></div>').join("")
+      + '<div class="st"><button class="rd" onclick="setStake(S.stake-1)">−</button><b style="min-width:70px;text-align:center">'+PP+fmt(S.stake)+'</b><button class="rd" onclick="setStake(S.stake+1)">+</button>'
+      + [1,5,10,50,100].map(v => '<button class="ch" onclick="setStake('+v*20+')">'+v+'</button>').join("")+'</div>'
+      + '<div class="row"><span>Quota totale</span><b>'+q2(total())+'</b></div><div class="row"><span>Vincita potenziale</span><b>'+PP+' '+fmt(win())+'</b></div>'
+      + (win()>=200000?'<div class="lg">Vincita massima: 10.000 peperoni</div>':"")+'<div class="msg">'+S.msg+'</div></div>'
+      + '<div class="row" style="padding:8px 14px"><button class="btn alt full" onclick="S.open=!S.open;draw()">Schedina ('+n+') '+(S.open?"▾":"▴")+'</button><button class="btn full" '+(S.busy?"disabled":"")+' onclick="place()">Gioca '+PP+' '+fmt(S.stake)+'</button></div>';
+  }
+  h += '<div class="nav"><button class="'+(S.tab==="palinsesto"?"on":"")+'" onclick="S.tab=\'palinsesto\';draw()">Palinsesto</button><button class="'+(S.tab==="giocate"?"on":"")+'" onclick="S.tab=\'giocate\';draw()">Le mie giocate</button></div></div></div>';
+  a.innerHTML = h;
+}
+sb.auth.onAuthStateChange((_e, session) => { S.user = session ? session.user : null; if (!S.user) { S.profile = null; S.picks = {}; } refresh(); });
+setInterval(() => { if (S.user && S.profile && S.tab === "palinsesto" && !["INPUT","SELECT"].includes(document.activeElement.tagName)) loadMatches().then(draw); }, 60000);
+draw();
+</script></body></html>
